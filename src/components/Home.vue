@@ -35,7 +35,7 @@
     </el-row>
     <el-row class="row">
       <el-row class="searchRow">
-        <el-input placeholder="Search..." class="searchInput" v-model="searchString" :disabled="searchForEmptyValues"></el-input>
+        <el-input :placeholder="advancedSearch ? 'Search on selected...' : 'Search all attributes...'" class="searchInput" v-model="searchString" :disabled="searchForEmptyValues"></el-input>
       </el-row>
       <h2>Results {{FilteredItems.length}}</h2>
       <el-row style="overflow: auto; height: 50vh; border-style: solid; border-radius: 5px;">
@@ -91,45 +91,67 @@ export default {
         },
         //Returns an array of objects using the selected attributes and search string to filter them.
         FilteredItems: function(){
-            let items = []
+            //let items = []
             let group = this.Groups.find(group => group.name == this.selectedGroup)
             if(group != undefined){
-                group.items.forEach(item => {
-                    if(this.advancedSearch){
-                        this.selectedAttributes.forEach(attribute => {
-                            if(Object.keys(item).includes(attribute)){
-                                if(this.searchForEmptyValues){
-                                    if(item[attribute] == '' || item[attribute] == undefined || item[attribute] == null && !items.includes(item)){
-                                        items.push(item)
-                                    }
-                                }
-                                else{
-                                    if(item[attribute].toString().includes(this.searchString) && !items.includes(item)){
-                                        items.push(item)
-                                    }
-                                }
-                            }
-                      });
+
+                if(this.advancedSearch){
+                    if(this.searchForEmptyValues){
+                        return group.items.filter(item => Object.keys(item).some(attribute => this.selectedAttributes.includes(attribute) && (item[attribute] === '' || item[attribute] === undefined || item[attribute] === null)))
                     }
                     else{
-                        Object.keys(item).forEach(attribute => {
-                            if(this.searchForEmptyValues){
-                                if(item[attribute] == '' || item[attribute] == undefined || item[attribute] == null && !items.includes(item)){
-                                    items.push(item)
-                                }
-                            }
-                            else{
-                                if(item[attribute] != null){
-                                    if(item[attribute].toString().includes(this.searchString) && !items.includes(item)){
-                                        items.push(item)
-                                    }
-                                }
-                            }
-                        });
+                        return group.items.filter(item => Object.keys(item).some(attribute => this.selectedAttributes.includes(attribute.toString()) && (item[attribute] == null ? '' : item[attribute]).toString().includes(this.searchString))
+                        && this.selectedAttributes.some(attribute => Object.keys(item).includes(attribute)))
                     }
-                })
+                }
+                else{
+                    if(this.searchForEmptyValues){
+                        return group.items.filter(item => Object.keys(item).some(attribute => item[attribute] == null))
+                    }
+                    else{
+                        return group.items.filter(item => Object.keys(item).some(attribute => (item[attribute] == null ? '' : item[attribute]).toString().includes(this.searchString)))
+                    }
+                }
+                
+                // group.items.forEach(item => {
+                //     if(this.advancedSearch){
+                //         this.selectedAttributes.forEach(attribute => {
+                //             if(Object.keys(item).includes(attribute)){
+                //                 if(this.searchForEmptyValues){
+                //                     if(item[attribute] == '' || item[attribute] == undefined || item[attribute] == null && !items.includes(item)){
+                //                         items.push(item)
+                //                     }
+                //                 }
+                //                 else{
+                //                     if(item[attribute] != null){
+                //                         if(item[attribute].toString().includes(this.searchString) && !items.includes(item)){
+                //                             items.push(item)
+                //                         }
+                //                     }
+                                    
+                //                 }
+                //             }
+                //       });
+                //     }
+                //     else{
+                //         Object.keys(item).forEach(attribute => {
+                //             if(this.searchForEmptyValues){
+                //                 if(item[attribute] == '' || item[attribute] == undefined || item[attribute] == null && !items.includes(item)){
+                //                     items.push(item)
+                //                 }
+                //             }
+                //             else{
+                //                 if(item[attribute] != null){
+                //                     if(item[attribute].toString().includes(this.searchString) && !items.includes(item)){
+                //                         items.push(item)
+                //                     }
+                //                 }
+                //             }
+                //         });
+                //     }
+                // })
             }
-            return items
+            return []
         }
     }
 }
