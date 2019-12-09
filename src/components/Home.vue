@@ -95,20 +95,38 @@ export default {
             let group = this.Groups.find(group => group.name == this.selectedGroup)
             if(group != undefined){
                 group.items.forEach(item => {
-                    this.selectedAttributes.forEach(attribute => {
-                        if(Object.keys(item).includes(attribute)){
+                    if(this.advancedSearch){
+                        this.selectedAttributes.forEach(attribute => {
+                            if(Object.keys(item).includes(attribute)){
+                                if(this.searchForEmptyValues){
+                                    if(item[attribute] == '' || item[attribute] == undefined || item[attribute] == null && !items.includes(item)){
+                                        items.push(item)
+                                    }
+                                }
+                                else{
+                                    if(item[attribute].toString().includes(this.searchString) && !items.includes(item)){
+                                        items.push(item)
+                                    }
+                                }
+                            }
+                      });
+                    }
+                    else{
+                        Object.keys(item).forEach(attribute => {
                             if(this.searchForEmptyValues){
                                 if(item[attribute] == '' || item[attribute] == undefined || item[attribute] == null && !items.includes(item)){
                                     items.push(item)
                                 }
                             }
                             else{
-                                if(item[attribute].toString().includes(this.searchString) && !items.includes(item)){
-                                    items.push(item)
+                                if(item[attribute] != null){
+                                    if(item[attribute].toString().includes(this.searchString) && !items.includes(item)){
+                                        items.push(item)
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
+                    }
                 })
             }
             return items
