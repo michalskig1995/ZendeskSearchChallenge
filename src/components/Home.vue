@@ -106,8 +106,7 @@ export default {
                     }
                     else{
                         return group.items.filter(item => Object.keys(item).some(attribute => this.selectedAttributes.includes(attribute.toString()) 
-                        && (item[attribute] == null ? '' : item[attribute]).toString().includes(this.searchString))
-                        && this.selectedAttributes.some(attribute => Object.keys(item).includes(attribute)))
+                        && (item[attribute] == null ? '' : item[attribute]).toString().includes(this.searchString)))
                     }
                 }
                 else{
