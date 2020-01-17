@@ -10,7 +10,7 @@
 -------------------------------------------------------------------------------------------------->
 <template>
   <div class="hello">
-    <h1>Zendesk Search App Challenge</h1>
+    <h1>Search App Challenge {{selectedGroup}}</h1>
     <el-row class="row">
       <el-button v-for="group in Groups" :key="group.name" @click="selectedGroup = group.name" :type="selectedGroup == group.name ? 'primary' : ''">
         {{group.name}}

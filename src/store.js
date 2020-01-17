@@ -1,7 +1,5 @@
 import Vue from 'vue'
-
 import Vuex from 'vuex'
-
 import Organizations from './assets/ZendeskJsons/organizations.json'
 import Tickets from './assets/ZendeskJsons/tickets.json'
 import Users from './assets/ZendeskJsons/users.json'
