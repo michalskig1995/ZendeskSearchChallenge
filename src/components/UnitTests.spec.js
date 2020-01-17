@@ -75,11 +75,24 @@ describe('Home.vue Search Related Tests', () => {
         await wrapper.vm.$nextTick()
         
         expect(wrapper.findAll(ItemCard).length).toBe(3)
+
+        //Reset checbox and switch.
+        elCheckBox.trigger('click')
+        elSwitch.trigger('click')
     })
 
     it('Selecting advanced search and a checkbox returns all item cards that contain that attribute that contains the given search string', async () => {
-        //! add switch button clicking
+        //Click the second switch button which sets advancedSearch to true.
+        const elSwitch = wrapper.findAll('.el-switch').at(1)
+        elSwitch.trigger('click')
 
+        await wrapper.vm.$nextTick()
+
+        //Select a checkbox that contains an attribute that not all items in this group have, in this case the attribute is 'occupation'.
+        const elCheckBox = wrapper.findAll('.el-checkbox').at(3)
+        elCheckBox.trigger('click')
+
+        await wrapper.vm.$nextTick()
 
         wrapper.setData({ searchString: 'Engineer' })
 
