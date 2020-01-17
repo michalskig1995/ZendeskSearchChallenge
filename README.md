@@ -12,6 +12,11 @@ node version: v10.16.0
 npm run serve
 ```
 
+### Run Unit Tests
+```
+npm run unit-test
+```
+
 ### Usage
 ```
 Select a group to search in using the buttons at the top.
