@@ -59,6 +59,14 @@ describe('Home.vue Search Related Tests', () => {
         expect(wrapper.vm.FilteredItems.length).toBe(store.state.Groups[1].items.length)
     })
 
+    it('Entering a search string returns items with any attribute that contains the search string.', async () => {
+        wrapper.setData({ searchString: 'Dave' })
+
+        await wrapper.vm.$nextTick()
+        
+        expect(wrapper.findAll(ItemCard).length).toBe(3)
+    })
+
     it('Selecting advanced search and a checkbox returns all item cards that contain that attribute.', async () => {
         //Search string is set to empty so all items that have the selected attribute will be returned regardless of its value.
         wrapper.setData({ searchString: '' })

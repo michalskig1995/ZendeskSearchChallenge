@@ -20,7 +20,7 @@ export default new Vuex.Store({
                     { name: 'Frank', age: 34, height: '6\'2'},
                     { name: 'Dave', age: null, occupation: 'Engineer'},
                     { name: 'Dave Smith', age: 23, occupation: 'Nurse'},
-                    { name: 'Donald', age: 73, occupation: 'President'}
+                    { name: 'Donald', age: 73, occupation: 'Professional Dave'}
                     
                 ]
             }
