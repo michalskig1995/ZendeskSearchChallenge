@@ -19,13 +19,9 @@
                     <b>{{attribute}}</b>
                 </div> 
                 <div v-if="Array.isArray(Item[attribute])" style="display: flex;">
-                    <div v-for="arrayItem in Item[attribute]" :key="'array' + arrayItem" class="arrayItem">
-                        {{arrayItem}}
-                    </div>
+                    <div v-for="arrayItem in Item[attribute]" :key="'array' + arrayItem" class="arrayItem">{{arrayItem}}</div>
                 </div>
-                <div v-else class="item">
-                    {{Item[attribute]}}
-                </div>
+                <div v-else class="item">{{Item[attribute]}}</div>
             </div>
             <hr>
         </div>

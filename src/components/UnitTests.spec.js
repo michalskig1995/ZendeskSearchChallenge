@@ -138,7 +138,7 @@ describe('ItemCard.vue', () => {
         localVue,
         propsData: {
             Title: 'People 2',
-            Item: { name: 'Dave', age: null, occupation: 'Engineer'}
+            Item: { name: 'Dave', age: null, occupation: 'Engineer', hobbies: ['fishing', 'biking']}
         }
      })
 
@@ -146,5 +146,16 @@ describe('ItemCard.vue', () => {
         expect(wrapper.isVueInstance()).toBeTruthy()
     })
 
+    it('Displays prop information properly for an attribute', () => {
+        expect(wrapper.html()).toContain('<b>name</b>')
+    })
     
+    it('Displays prop information properly for an attribute value', () => {
+        expect(wrapper.html()).toContain('<div class=\"item\">Dave</div>')
+    })
+
+    it('Displays prop information properly for an attribute value array', () => {
+        expect(wrapper.html()).toContain('<div class=\"arrayItem\">fishing</div>')
+        expect(wrapper.html()).toContain('<div class=\"arrayItem\">biking</div>')
+    })
 })
